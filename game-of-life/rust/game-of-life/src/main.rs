@@ -31,4 +31,26 @@ mod tests {
 
         assert_eq!(new_generation, seed);
     }
+
+    #[test]
+    fn a_vertical_oscillator_evolves_into_a_horizonal_one() {
+        let seed = vec![
+            vec![Dead, Dead, Dead, Dead, Dead],
+            vec![Dead, Dead, Alive, Dead, Dead],
+            vec![Dead, Dead, Alive, Dead, Dead],
+            vec![Dead, Dead, Alive, Dead, Dead],
+            vec![Dead, Dead, Dead, Dead, Dead],
+        ];
+
+        let new_generation = evolve(&seed);
+
+        let horizontal_oscillator = vec![
+            vec![Dead, Dead, Dead, Dead, Dead],
+            vec![Dead, Dead, Dead, Dead, Dead],
+            vec![Dead, Alive, Alive, Alive, Dead],
+            vec![Dead, Dead, Dead, Dead, Dead],
+            vec![Dead, Dead, Dead, Dead, Dead],
+        ];
+        assert_eq!(new_generation, horizontal_oscillator);
+    }
 }

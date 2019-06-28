@@ -1,7 +1,7 @@
 fn main() {
     println!("Hello, world!");
 }
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Clone)]
 enum CellType {
     Dead,
     Alive
@@ -10,7 +10,7 @@ enum CellType {
 type Grid = Vec<Vec<CellType>>;
 
 fn evolve(seed: &Grid) -> Grid {
-    return Vec::new();
+    return seed.to_vec();
 }
 
 #[cfg(test)]

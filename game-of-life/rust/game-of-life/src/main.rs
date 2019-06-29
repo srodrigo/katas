@@ -8,6 +8,14 @@ enum CellType {
     Alive
 }
 
+fn is_alive(cell: &CellType) -> bool {
+    *cell == CellType::Alive
+}
+
+fn is_dead(cell: &CellType) -> bool {
+    *cell == CellType::Dead
+}
+
 type Grid = Vec<Vec<CellType>>;
 type CellPos = (usize, usize);
 
@@ -23,19 +31,19 @@ fn evolve(seed: &Grid) -> Grid {
             let cell = at(seed, position);
 
             // Any live cell with fewer than two live neighbours dies, as if by underpopulation.
-            if cell == Alive && num_live_neighbours < 2 {
+            if is_alive(cell) && num_live_neighbours < 2 {
                 set(&mut new_generation, position, Dead)
             }
             // Any live cell with two or three live neighbours lives on to the next generation.
-            if cell == Alive && (num_live_neighbours == 2 || num_live_neighbours == 3) {
+            if is_alive(cell) && (num_live_neighbours == 2 || num_live_neighbours == 3) {
                 set(&mut new_generation, position, Alive)
             }
             // Any live cell with more than three live neighbours dies, as if by overpopulation.
-            if cell == Alive && num_live_neighbours > 3 {
+            if is_alive(cell) && num_live_neighbours > 3 {
                 set(&mut new_generation, position, Dead)
             }
             // Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.
-            if cell == Dead && num_live_neighbours == 3 {
+            if is_dead(cell) && num_live_neighbours == 3 {
                 set(&mut new_generation, position, Alive)
             }
         }
@@ -57,7 +65,7 @@ fn count_live_neighbours(grid: &Grid, position: CellPos) -> u16 {
 
     for y in y_start..y_end {
         for x in x_start..x_end {
-            if !(x == cell_x && y == cell_y) && at(grid, (x, y)) == CellType::Alive {
+            if !(x == cell_x && y == cell_y) && *at(grid, (x, y)) == CellType::Alive {
                 num_neighbours = num_neighbours + 1;
             }
         }
@@ -66,8 +74,8 @@ fn count_live_neighbours(grid: &Grid, position: CellPos) -> u16 {
     num_neighbours
 }
 
-fn at(grid: &Grid, position: CellPos) -> CellType {
-    grid[position.1][position.0].clone()
+fn at(grid: &Grid, position: CellPos) -> &CellType {
+    &grid[position.1][position.0]
 }
 
 fn set(grid: & mut Grid, position: CellPos, cell_type: CellType) {

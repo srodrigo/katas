@@ -23,7 +23,7 @@ fn evolve(seed: &Grid) -> Grid {
             if is_alive(cell) && is_underpopulated_at(seed, position) {
                 kill_cell_at(&mut new_generation, position);
             }
-            if is_alive(cell) && num_live_neighbours > 3 {
+            if is_alive(cell) && is_overpopulated_at(seed, position) {
                 kill_cell_at(&mut new_generation, position);
             }
             if is_dead(cell) && num_live_neighbours == 3 {
@@ -75,6 +75,10 @@ fn revive_cell_at(grid: &mut Grid, position: CellPos) {
 
 fn is_underpopulated_at(grid: &Grid, position: CellPos) -> bool {
     count_live_neighbours(grid, position) < 2
+}
+
+fn is_overpopulated_at(grid: &Grid, position: CellPos) -> bool {
+    count_live_neighbours(grid, position) > 3
 }
 
 fn at(grid: &Grid, position: CellPos) -> &CellType {

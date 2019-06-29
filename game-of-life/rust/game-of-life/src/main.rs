@@ -17,15 +17,14 @@ fn evolve(seed: &Grid) -> Grid {
     for (y, row) in seed.iter().enumerate() {
         for (x, _) in row.iter().enumerate() {
             let position = (x, y);
-            let cell = at(seed, position);
 
-            if is_alive(cell) && is_underpopulated_at(seed, position) {
+            if is_alive_at(seed, position) && is_underpopulated_at(seed, position) {
                 kill_cell_at(&mut new_generation, position);
             }
-            if is_alive(cell) && is_overpopulated_at(seed, position) {
+            if is_alive_at(seed, position) && is_overpopulated_at(seed, position) {
                 kill_cell_at(&mut new_generation, position);
             }
-            if is_dead(cell) && is_reproducible_at(seed, position) {
+            if is_dead_at(seed, position) && is_reproducible_at(seed, position) {
                 revive_cell_at(&mut new_generation, position);
             }
         }
@@ -56,12 +55,12 @@ fn count_live_neighbours(grid: &Grid, position: CellPos) -> u16 {
     num_neighbours
 }
 
-fn is_alive(cell: &CellType) -> bool {
-    *cell == CellType::Alive
+fn is_alive_at(grid: & Grid, position: CellPos) -> bool {
+    *at(grid, position) == CellType::Alive
 }
 
-fn is_dead(cell: &CellType) -> bool {
-    *cell == CellType::Dead
+fn is_dead_at(grid: & Grid, position: CellPos) -> bool {
+    *at(grid, position) == CellType::Dead
 }
 
 fn kill_cell_at(grid: &mut Grid, position: CellPos) {

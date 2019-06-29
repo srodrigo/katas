@@ -20,8 +20,6 @@ type Grid = Vec<Vec<CellType>>;
 type CellPos = (usize, usize);
 
 fn evolve(seed: &Grid) -> Grid {
-    use CellType::*;
-
     let mut new_generation = seed.to_vec();
 
     for (y, row) in seed.iter().enumerate() {
@@ -36,7 +34,7 @@ fn evolve(seed: &Grid) -> Grid {
             }
             // Any live cell with two or three live neighbours lives on to the next generation.
             if is_alive(cell) && (num_live_neighbours == 2 || num_live_neighbours == 3) {
-                set(&mut new_generation, position, Alive)
+                revive_cell_at(&mut new_generation, position);
             }
             // Any live cell with more than three live neighbours dies, as if by overpopulation.
             if is_alive(cell) && num_live_neighbours > 3 {
@@ -44,7 +42,7 @@ fn evolve(seed: &Grid) -> Grid {
             }
             // Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.
             if is_dead(cell) && num_live_neighbours == 3 {
-                set(&mut new_generation, position, Alive)
+                revive_cell_at(&mut new_generation, position);
             }
         }
     }
@@ -76,6 +74,10 @@ fn count_live_neighbours(grid: &Grid, position: CellPos) -> u16 {
 
 fn kill_cell_at(grid: &mut Grid, position: CellPos) {
     set(grid, position, CellType::Dead);
+}
+
+fn revive_cell_at(grid: &mut Grid, position: CellPos) {
+    set(grid, position, CellType::Alive);
 }
 
 fn at(grid: &Grid, position: CellPos) -> &CellType {

@@ -20,15 +20,12 @@ fn evolve(seed: &Grid) -> Grid {
             let num_live_neighbours = count_live_neighbours(seed, position);
             let cell = at(seed, position);
 
-            // Any live cell with fewer than two live neighbours dies, as if by underpopulation.
-            if is_alive(cell) && num_live_neighbours < 2 {
+            if is_alive(cell) && is_underpopulated_at(seed, position) {
                 kill_cell_at(&mut new_generation, position);
             }
-            // Any live cell with more than three live neighbours dies, as if by overpopulation.
             if is_alive(cell) && num_live_neighbours > 3 {
                 kill_cell_at(&mut new_generation, position);
             }
-            // Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.
             if is_dead(cell) && num_live_neighbours == 3 {
                 revive_cell_at(&mut new_generation, position);
             }
@@ -74,6 +71,10 @@ fn kill_cell_at(grid: &mut Grid, position: CellPos) {
 
 fn revive_cell_at(grid: &mut Grid, position: CellPos) {
     set(grid, position, CellType::Alive);
+}
+
+fn is_underpopulated_at(grid: &Grid, position: CellPos) -> bool {
+    count_live_neighbours(grid, position) < 2
 }
 
 fn at(grid: &Grid, position: CellPos) -> &CellType {

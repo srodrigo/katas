@@ -24,10 +24,6 @@ fn evolve(seed: &Grid) -> Grid {
             if is_alive(cell) && num_live_neighbours < 2 {
                 kill_cell_at(&mut new_generation, position);
             }
-            // Any live cell with two or three live neighbours lives on to the next generation.
-            if is_alive(cell) && (num_live_neighbours == 2 || num_live_neighbours == 3) {
-                revive_cell_at(&mut new_generation, position);
-            }
             // Any live cell with more than three live neighbours dies, as if by overpopulation.
             if is_alive(cell) && num_live_neighbours > 3 {
                 kill_cell_at(&mut new_generation, position);

@@ -8,14 +8,6 @@ enum CellType {
     Alive
 }
 
-fn is_alive(cell: &CellType) -> bool {
-    *cell == CellType::Alive
-}
-
-fn is_dead(cell: &CellType) -> bool {
-    *cell == CellType::Dead
-}
-
 type Grid = Vec<Vec<CellType>>;
 type CellPos = (usize, usize);
 
@@ -70,6 +62,14 @@ fn count_live_neighbours(grid: &Grid, position: CellPos) -> u16 {
     }
 
     num_neighbours
+}
+
+fn is_alive(cell: &CellType) -> bool {
+    *cell == CellType::Alive
+}
+
+fn is_dead(cell: &CellType) -> bool {
+    *cell == CellType::Dead
 }
 
 fn kill_cell_at(grid: &mut Grid, position: CellPos) {

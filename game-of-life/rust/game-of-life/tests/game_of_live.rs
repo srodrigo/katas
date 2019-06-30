@@ -6,44 +6,24 @@ mod tests {
     use game_of_life::CellType::Dead;
     use game_of_life::CellType::Alive;
 
-    #[test]
-    fn a_block_evolves_into_a_block() {
-        assert_eq!(
-            evolve(&block()),
-            block()
-        );
+    macro_rules! game_of_life_tests {
+        ($($name:ident: $value:expr,)*) => {
+            $(
+                #[test]
+                fn $name() {
+                    let (input, expected) = $value;
+                    assert_eq!(evolve(&input), expected);
+                }
+            )*
+        }
     }
 
-    #[test]
-    fn a_vertical_oscillator_evolves_into_a_horizonal_one() {
-        assert_eq!(
-            evolve(&vertical_oscillator()),
-            horizontal_oscillator()
-        );
-    }
-
-    #[test]
-    fn a_horizontal_oscillator_evolves_into_a_vertical_one() {
-        assert_eq!(
-            evolve(&horizontal_oscillator()),
-            vertical_oscillator()
-        );
-    }
-
-    #[test]
-    fn a_packed_toad_evolves_into_an_open_one() {
-        assert_eq!(
-            evolve(&packed_toad()),
-            open_toad()
-        );
-    }
-
-    #[test]
-    fn an_open_toad_evolves_into_a_packed_one() {
-        assert_eq!(
-            evolve(&open_toad()),
-            packed_toad()
-        );
+    game_of_life_tests! {
+        a_block_evolves_into_a_block: (block(), block()),
+        a_vertical_oscillator_evolves_into_a_horizonal_one: (vertical_oscillator(), horizontal_oscillator()),
+        a_horizontal_oscillator_evolves_into_a_vertical_one: (horizontal_oscillator(), vertical_oscillator()),
+        a_packed_toad_evolves_into_an_open_one: (packed_toad(), open_toad()),
+        an_open_toad_evolves_into_a_packed_one: (open_toad(), packed_toad()),
     }
 
     fn block() -> Grid {

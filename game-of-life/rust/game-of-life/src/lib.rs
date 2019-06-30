@@ -1,3 +1,5 @@
+use std::ops::Range;
+
 #[derive(Debug, PartialEq, Clone)]
 pub enum CellType {
     Dead,
@@ -34,22 +36,11 @@ fn count_live_neighbours(grid: &Grid, position: CellPos) -> u16 {
 
     let cell_y = position.1;
     let cell_x = position.0;
+    let cols = grid[0].len();
+    let rows = grid.len();
 
-    let y_start = if cell_y > 0 { cell_y - 1 } else { 0 };
-    let y_end = if cell_y < grid.len() - 1 {
-        cell_y + 2
-    } else {
-        grid.len()
-    };
-    let x_start = if cell_x > 0 { cell_x - 1 } else { 0 };
-    let x_end = if cell_x < grid[0].len() - 1 {
-        cell_x + 2
-    } else {
-        grid[0].len()
-    };
-
-    for y in y_start..y_end {
-        for x in x_start..x_end {
+    for y in range(cell_y, rows) {
+        for x in range(cell_x, cols) {
             if !(x == cell_x && y == cell_y) && *at(grid, (x, y)) == CellType::Alive {
                 num_neighbours = num_neighbours + 1;
             }
@@ -57,6 +48,17 @@ fn count_live_neighbours(grid: &Grid, position: CellPos) -> u16 {
     }
 
     num_neighbours
+}
+
+fn range(position: usize, limit: usize) -> Range<usize> {
+    Range {
+        start: if position > 0 { position - 1 } else { 0 },
+        end: if position < limit - 1 {
+            position + 2
+        } else {
+            limit
+        },
+    }
 }
 
 fn is_alive_at(grid: &Grid, position: CellPos) -> bool {

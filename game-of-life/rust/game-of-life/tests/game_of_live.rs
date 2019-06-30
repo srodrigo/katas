@@ -9,41 +9,61 @@ mod tests {
     #[test]
     fn a_block_evolves_into_a_block() {
         assert_eq!(
-            evolve(&load_grid("block")),
-            load_grid("block")
+            evolve(&block()),
+            block()
         );
     }
 
     #[test]
     fn a_vertical_oscillator_evolves_into_a_horizonal_one() {
         assert_eq!(
-            evolve(&load_grid("vertical-oscillator")),
-            load_grid("horizontal-oscillator")
+            evolve(&vertical_oscillator()),
+            horizontal_oscillator()
         );
     }
 
     #[test]
     fn a_horizontal_oscillator_evolves_into_a_vertical_one() {
         assert_eq!(
-            evolve(&load_grid("horizontal-oscillator")),
-            load_grid("vertical-oscillator")
+            evolve(&horizontal_oscillator()),
+            vertical_oscillator()
         );
     }
 
     #[test]
     fn a_packed_toad_evolves_into_an_open_one() {
         assert_eq!(
-            evolve(&load_grid("packed-toad")),
-            load_grid("open-toad")
+            evolve(&packed_toad()),
+            open_toad()
         );
     }
 
     #[test]
     fn an_open_toad_evolves_into_a_packed_one() {
         assert_eq!(
-            evolve(&load_grid("open-toad")),
-            load_grid("packed-toad")
+            evolve(&open_toad()),
+            packed_toad()
         );
+    }
+
+    fn block() -> Grid {
+        load_grid("block")
+    }
+
+    fn vertical_oscillator() -> Grid {
+        load_grid("vertical-oscillator")
+    }
+
+    fn horizontal_oscillator() -> Grid {
+        load_grid("horizontal-oscillator")
+    }
+
+    fn packed_toad() -> Grid {
+        load_grid("packed-toad")
+    }
+
+    fn open_toad() -> Grid {
+        load_grid("open-toad")
     }
 
     fn load_grid(filename: &str) -> Grid {

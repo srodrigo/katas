@@ -1,21 +1,18 @@
 #[cfg(test)]
 mod tests {
+    use std::fs;
+
     use game_of_life::*;
     use game_of_life::CellType::Dead;
     use game_of_life::CellType::Alive;
 
     #[test]
     fn a_block_evolves_into_a_block() {
-        let seed = vec![
-            vec![Dead, Dead, Dead, Dead],
-            vec![Dead, Alive, Alive, Dead],
-            vec![Dead, Alive, Alive, Dead],
-            vec![Dead, Dead, Dead, Dead],
-        ];
+        let seed = load_grid("block");
 
         let new_generation = evolve(&seed);
 
-        assert_eq!(new_generation, seed);
+        assert_eq!(new_generation, load_grid("block"));
     }
 
     #[test]
@@ -108,5 +105,21 @@ mod tests {
             vec![Dead, Dead, Dead, Dead, Dead, Dead],
         ];
         assert_eq!(new_generation, packed_toad);
+    }
+
+    fn load_grid(filename: &str) -> Grid {
+        fs::read_to_string(
+                format!("../../gol-patterns/{}.txt", filename)
+            )
+            .expect("Could not read file")
+            .lines()
+            .collect::<Vec<&str>>()
+            .iter()
+            .map(|&line| line
+                 .chars()
+                 .map(|c| if c == 'o' { Alive } else { Dead  })
+                 .collect::<Vec<CellType>>()
+            )
+            .collect::<Vec<Vec<CellType>>>()
     }
 }

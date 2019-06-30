@@ -73,11 +73,11 @@ fn neighbours_range(position: usize, limit: usize) -> Range<usize> {
 }
 
 fn is_alive_at(grid: &Grid, position: CellPos) -> bool {
-    *at(grid, position) == CellType::Alive
+    at(grid, position) == CellType::Alive
 }
 
 fn is_dead_at(grid: &Grid, position: CellPos) -> bool {
-    *at(grid, position) == CellType::Dead
+    at(grid, position) == CellType::Dead
 }
 
 fn kill_cell_at(grid: &mut Grid, position: CellPos) {
@@ -100,8 +100,8 @@ fn is_reproducible_at(grid: &Grid, position: CellPos) -> bool {
     count_live_neighbours(grid, position) == 3
 }
 
-fn at(grid: &Grid, position: CellPos) -> &CellType {
-    &grid[position.1][position.0]
+fn at(grid: &Grid, position: CellPos) -> CellType {
+    grid[position.1][position.0].clone()
 }
 
 fn set(grid: &mut Grid, position: CellPos, cell_type: CellType) {

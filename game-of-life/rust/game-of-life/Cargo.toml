@@ -1,7 +1,5 @@
 [package]
-name = "game-of-life"
+name = "game_of_life"
 version = "0.1.0"
 authors = ["Sergio Rodrigo Royo <sergio.rodrigo.royo@gmail.com>"]
 edition = "2018"
-
-[dependencies]

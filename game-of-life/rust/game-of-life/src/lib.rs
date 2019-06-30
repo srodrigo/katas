@@ -1,7 +1,7 @@
 #[derive(Debug, PartialEq, Clone)]
 pub enum CellType {
     Dead,
-    Alive
+    Alive,
 }
 
 pub type Grid = Vec<Vec<CellType>>;
@@ -36,9 +36,17 @@ fn count_live_neighbours(grid: &Grid, position: CellPos) -> u16 {
     let cell_x = position.0;
 
     let y_start = if cell_y > 0 { cell_y - 1 } else { 0 };
-    let y_end = if cell_y < grid.len() - 1 { cell_y + 2 } else { grid.len() };
+    let y_end = if cell_y < grid.len() - 1 {
+        cell_y + 2
+    } else {
+        grid.len()
+    };
     let x_start = if cell_x > 0 { cell_x - 1 } else { 0 };
-    let x_end = if cell_x < grid[0].len() - 1 { cell_x + 2 } else { grid[0].len() };
+    let x_end = if cell_x < grid[0].len() - 1 {
+        cell_x + 2
+    } else {
+        grid[0].len()
+    };
 
     for y in y_start..y_end {
         for x in x_start..x_end {
@@ -51,11 +59,11 @@ fn count_live_neighbours(grid: &Grid, position: CellPos) -> u16 {
     num_neighbours
 }
 
-fn is_alive_at(grid: & Grid, position: CellPos) -> bool {
+fn is_alive_at(grid: &Grid, position: CellPos) -> bool {
     *at(grid, position) == CellType::Alive
 }
 
-fn is_dead_at(grid: & Grid, position: CellPos) -> bool {
+fn is_dead_at(grid: &Grid, position: CellPos) -> bool {
     *at(grid, position) == CellType::Dead
 }
 
@@ -83,6 +91,6 @@ fn at(grid: &Grid, position: CellPos) -> &CellType {
     &grid[position.1][position.0]
 }
 
-fn set(grid: & mut Grid, position: CellPos, cell_type: CellType) {
+fn set(grid: &mut Grid, position: CellPos, cell_type: CellType) {
     grid[position.1][position.0] = cell_type;
 }

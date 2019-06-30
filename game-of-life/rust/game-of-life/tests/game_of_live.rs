@@ -2,9 +2,9 @@
 mod tests {
     use std::fs;
 
-    use game_of_life::*;
-    use game_of_life::CellType::Dead;
     use game_of_life::CellType::Alive;
+    use game_of_life::CellType::Dead;
+    use game_of_life::*;
 
     macro_rules! game_of_life_tests {
         ($($name:ident: $value:expr,)*) => {
@@ -47,18 +47,16 @@ mod tests {
     }
 
     fn load_grid(filename: &str) -> Grid {
-        fs::read_to_string(
-                format!("../../gol-patterns/{}.txt", filename)
-            )
+        fs::read_to_string(format!("../../gol-patterns/{}.txt", filename))
             .expect("Could not read file")
             .lines()
             .collect::<Vec<&str>>()
             .iter()
-            .map(|&line| line
-                 .chars()
-                 .map(|c| if c == 'o' { Alive } else { Dead  })
-                 .collect::<Vec<CellType>>()
-            )
+            .map(|&line| {
+                line.chars()
+                    .map(|c| if c == 'o' { Alive } else { Dead })
+                    .collect::<Vec<CellType>>()
+            })
             .collect::<Vec<Vec<CellType>>>()
     }
 }

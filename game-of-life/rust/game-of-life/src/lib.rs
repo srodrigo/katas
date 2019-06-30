@@ -39,7 +39,8 @@ fn count_live_neighbours(grid: &Grid, position: CellPos) -> u16 {
 
     for y in range(cell_y, num_rows(grid)) {
         for x in range(cell_x, num_columns(grid)) {
-            if not_equal((x, y), position) && is_alive_at(grid, (x, y)) {
+            let position_checked = (x, y);
+            if not_equal(position_checked, position) && is_alive_at(grid, position_checked) {
                 num_neighbours = num_neighbours + 1;
             }
         }

@@ -41,7 +41,7 @@ fn count_live_neighbours(grid: &Grid, position: CellPos) -> u16 {
 
     for y in range(cell_y, rows) {
         for x in range(cell_x, cols) {
-            if !(x == cell_x && y == cell_y) && *at(grid, (x, y)) == CellType::Alive {
+            if !(x == cell_x && y == cell_y) && is_alive_at(grid, (x, y)) {
                 num_neighbours = num_neighbours + 1;
             }
         }

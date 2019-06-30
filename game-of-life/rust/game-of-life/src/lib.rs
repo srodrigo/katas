@@ -41,13 +41,17 @@ fn count_live_neighbours(grid: &Grid, position: CellPos) -> u16 {
 
     for y in range(cell_y, rows) {
         for x in range(cell_x, cols) {
-            if !(x == cell_x && y == cell_y) && is_alive_at(grid, (x, y)) {
+            if not_equal((x, y), position) && is_alive_at(grid, (x, y)) {
                 num_neighbours = num_neighbours + 1;
             }
         }
     }
 
     num_neighbours
+}
+
+fn not_equal(position_a: CellPos, position_b: CellPos) -> bool {
+    !(position_a.0 == position_b.0 && position_a.1 == position_b.1)
 }
 
 fn range(position: usize, limit: usize) -> Range<usize> {

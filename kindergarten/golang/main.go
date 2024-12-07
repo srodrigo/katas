@@ -1,6 +1,10 @@
-package kindergarten
+package main
 
-import "os"
+import (
+	"fmt"
+	. "main/kindergarten"
+	"os"
+)
 
 func main() {
 	garden := [][]PlantName{
@@ -8,4 +12,7 @@ func main() {
 		{V, R, C, C, C, G, C, R, R, G, V, C, G, C, R, V, V, C, V, G, C, G, C, V},
 	}
 	PrintStudentPlants(os.Stdout, garden, Alice)
+	fmt.Println()
+	PrintStudentPlants(os.Stdout, garden, Bob)
+	fmt.Println()
 }

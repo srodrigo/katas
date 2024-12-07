@@ -78,7 +78,7 @@ func (name StudentName) String() string {
 	}
 }
 
-func formatStudentPlants(plants [4]PlantName) string {
+func joinPlants(plants [4]PlantName) string {
 	plantNames := ""
 	for index, plant := range plants {
 		plantNames += plant.String()
@@ -86,6 +86,12 @@ func formatStudentPlants(plants [4]PlantName) string {
 			plantNames += ", "
 		}
 	}
+
+	return plantNames
+}
+
+func formatStudentPlants(plants [4]PlantName) string {
+	plantNames := joinPlants(plants)
 
 	return strings.ToUpper(plantNames[:1]) + strings.ToLower(plantNames[1:])
 }

@@ -49,11 +49,11 @@ func (name StudentName) String() string {
 }
 
 var garden = [...][]PlantName{
-	{Violets, Radishes, Violets, Radishes},
-	{Clover, Grass, Clover, Clover},
+	{Violets, Radishes, Clover, Grass},
+	{Violets, Radishes, Clover, Clover},
 }
 
-func formatStudentPlants(plants []PlantName) string {
+func formatStudentPlants(plants [4]PlantName) string {
 	plantNames := ""
 	for index, plant := range plants {
 		plantNames += plant.String()
@@ -65,8 +65,15 @@ func formatStudentPlants(plants []PlantName) string {
 	return strings.ToUpper(plantNames[:1]) + strings.ToLower(plantNames[1:])
 }
 
-func getStudentPlants(studentName StudentName) []PlantName {
-	return garden[studentName]
+func getStudentPlants(studentName StudentName) [4]PlantName {
+	yStart := studentName * 2
+
+	return [4]PlantName{
+		garden[0][yStart],
+		garden[0][yStart+1],
+		garden[1][yStart],
+		garden[1][yStart+1],
+	}
 }
 
 func PrintStudentPlants(writer io.Writer, studentName StudentName) {

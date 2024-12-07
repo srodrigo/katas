@@ -9,21 +9,21 @@ import (
 type PlantName int
 
 const (
-	Violets PlantName = iota + 1
-	Radishes
-	Clover
-	Grass
+	V PlantName = iota + 1
+	R
+	C
+	G
 )
 
 func (name PlantName) String() string {
 	switch name {
-	case Violets:
+	case V:
 		return "violets"
-	case Radishes:
+	case R:
 		return "radishes"
-	case Clover:
+	case C:
 		return "clover"
-	case Grass:
+	case G:
 		return "grass"
 	default:
 		panic("Unsupported plant name")
@@ -35,6 +35,16 @@ type StudentName int
 const (
 	Alice StudentName = iota
 	Bob
+	Charlie
+	David
+	Eve
+	Fred
+	Ginny
+	Harriet
+	Ileana
+	Joseph
+	Kincaid
+	Larry
 )
 
 func (name StudentName) String() string {
@@ -43,14 +53,29 @@ func (name StudentName) String() string {
 		return "Alice"
 	case Bob:
 		return "Bob"
+	case Charlie:
+		return "Charlie"
+	case David:
+		return "David"
+	case Eve:
+		return "Eve"
+	case Fred:
+		return "Fred"
+	case Ginny:
+		return "Ginny"
+	case Harriet:
+		return "Harriet"
+	case Ileana:
+		return "Ileana"
+	case Joseph:
+		return "Joseph"
+	case Kincaid:
+		return "Kincaid"
+	case Larry:
+		return "Larry"
 	default:
 		panic("Unsupported student name")
 	}
-}
-
-var garden = [...][]PlantName{
-	{Violets, Radishes, Clover, Grass},
-	{Violets, Radishes, Clover, Clover},
 }
 
 func formatStudentPlants(plants [4]PlantName) string {
@@ -65,7 +90,7 @@ func formatStudentPlants(plants [4]PlantName) string {
 	return strings.ToUpper(plantNames[:1]) + strings.ToLower(plantNames[1:])
 }
 
-func getStudentPlants(studentName StudentName) [4]PlantName {
+func getStudentPlants(garden [][]PlantName, studentName StudentName) [4]PlantName {
 	yStart := studentName * 2
 
 	return [4]PlantName{
@@ -76,7 +101,7 @@ func getStudentPlants(studentName StudentName) [4]PlantName {
 	}
 }
 
-func PrintStudentPlants(writer io.Writer, studentName StudentName) {
+func PrintStudentPlants(writer io.Writer, garden [][]PlantName, studentName StudentName) {
 	fmt.Fprint(
-		writer, formatStudentPlants(getStudentPlants(studentName)))
+		writer, formatStudentPlants(getStudentPlants(garden, studentName)))
 }
